@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "875114908386",
+    "project_id": "hackathon-k5",
+    "storage_bucket": "hackathon-k5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875114908386:android:c891fcd3a69dbe8b5d2cbb",
+        "android_client_info": {
+          "package_name": "com.febrian.hackathon_k5"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875114908386-ipatcpfva8dm65fq34r5tj390cjp080t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7iCRd6OIUogxPXK2Q71SMUlmN-L9_Ae8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875114908386-ipatcpfva8dm65fq34r5tj390cjp080t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
