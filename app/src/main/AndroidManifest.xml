@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hackathon_K5">
         <activity
-            android:name=".pembeli.LoginActivity"
+            android:name="MainActivity"
             android:exported="true" />
         <activity
             android:name=".pembeli.RegisterActivity"
@@ -22,7 +22,7 @@
             android:name=".pedagang.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".pembeli.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
