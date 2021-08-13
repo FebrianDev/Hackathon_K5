@@ -22,14 +22,29 @@
             android:name=".pedagang.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".pembeli.LoginActivity"
-            android:exported="true">
+            android:name=".pedagang.HomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".pembeli.DetailItemActivity"
+            android:exported="true" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.Hackathon_K5.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".pembeli.LoginActivity"
+            android:exported="true"></activity>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
