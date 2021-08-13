@@ -11,11 +11,14 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.core.view.isVisible
+import com.febrian.hackathon_k5.MainActivity
 
 
 import com.febrian.hackathon_k5.databinding.ActivityRegisterPembeliBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.PhoneAuthProvider
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding : ActivityRegisterPembeliBinding
@@ -23,6 +26,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterPembeliBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.loginHere.setOnClickListener(){
             val intent =
                 Intent(this@RegisterActivity, LoginActivity::class.java)
@@ -42,13 +46,6 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(
                         this@RegisterActivity,
                         "Tolong isi email.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                TextUtils.isEmpty(binding.phonePass.text.toString().trim(){ it <= ' '})->{
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Tolong isi nomor telepon.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -86,8 +83,6 @@ class RegisterActivity : AppCompatActivity() {
                         )
                 }
             }
-
         }
-
     }
 }

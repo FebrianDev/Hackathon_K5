@@ -21,15 +21,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"
-        tools:text="Login" />
+        tools:text="Masuk" />
 
     <TextView
-        android:id="@+id/username_text_login"
+        android:id="@+id/phone_text_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginTop="196dp"
-        android:text="Username"
+        android:text="Nomor Telepon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,29 +39,29 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginTop="48dp"
-        android:text="Password"
+        android:text="Kata Sandi"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_text_login" />
+        app:layout_constraintTop_toBottomOf="@+id/phone_text_login" />
 
     <EditText
         android:id="@+id/username_pass_login"
-        android:layout_width="269dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/password_text_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_text_login"
+        app:layout_constraintTop_toBottomOf="@+id/phone_text_login"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/password_pass_login"
-        android:layout_width="263dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
@@ -78,37 +78,38 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="224dp"
-        android:text="Login"
+        android:text="Masuk"
         android:visibility="visible"
         app:cornerRadius="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_pass_login" />
+        app:layout_constraintTop_toBottomOf="@+id/password_pass_login"
+        app:layout_constraintVertical_bias="0.016" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="24dp"
+        android:text="Belum punya akun?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
     <TextView
         android:id="@+id/register_here"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-black"
-        android:text="Register"
+        android:text="Daftar"
         app:layout_constraintStart_toEndOf="@+id/textView7"
-        app:layout_constraintTop_toBottomOf="@+id/login_button" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="78dp"
-        android:layout_marginTop="28dp"
-        android:text="Dont have an account?"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
