@@ -14,7 +14,6 @@ import com.febrian.hackathon_k5.pembeli.RegisterActivity
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
-import com.google.firebase.ktx.Firebase
 import java.util.concurrent.TimeUnit
 
 class RegisterActivity : AppCompatActivity() {
@@ -135,7 +134,7 @@ class RegisterActivity : AppCompatActivity() {
             private fun startPhoneNumberVerification(phoneNumber: String) {
                 // [START start_phone_auth]
                 val options = PhoneAuthOptions.newBuilder(auth)
-                    .setPhoneNumber("+62"+phoneNumber)       // Phone number to verify
+                    .setPhoneNumber(phoneNumber)       // Phone number to verify
                     .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                     .setActivity(this)                 // Activity (for callback binding)
                     .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
@@ -157,7 +156,7 @@ class RegisterActivity : AppCompatActivity() {
                 token: PhoneAuthProvider.ForceResendingToken?
             ) {
                 val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
-                    .setPhoneNumber("+62"+phoneNumber)       // Phone number to verify
+                    .setPhoneNumber(phoneNumber)       // Phone number to verify
                     .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                     .setActivity(this)                 // Activity (for callback binding)
                     .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
