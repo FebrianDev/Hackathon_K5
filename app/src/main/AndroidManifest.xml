@@ -19,8 +19,8 @@
             android:name=".pedagang.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".pedagang.RegisterActivity"
-            android:exported="true" />
+            android:name=".pembeli.LoginActivity"
+            android:exported="true"            />
         <activity
             android:name=".pedagang.HomeActivity"
             android:exported="true" />
@@ -28,10 +28,8 @@
             android:name=".pembeli.DetailItemActivity"
             android:exported="true" />
         <activity
-            android:name=".HomeActivity"
-            android:exported="true"
-            android:label="@string/title_activity_home"
-            android:theme="@style/Theme.Hackathon_K5.NoActionBar">
+            android:name=".pedagang.RegisterActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,8 +37,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".pembeli.LoginActivity"
-            android:exported="true"></activity>
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.Hackathon_K5.NoActionBar">
+        </activity>
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

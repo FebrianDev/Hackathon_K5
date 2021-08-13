@@ -159,11 +159,9 @@ class RegisterActivity : AppCompatActivity() {
                     .setPhoneNumber(phoneNumber)       // Phone number to verify
                     .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                     .setActivity(this)                 // Activity (for callback binding)
-                    .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
-                if (token != null) {
-                    optionsBuilder.setForceResendingToken(token) // callback's ForceResendingToken
-                }
-                PhoneAuthProvider.verifyPhoneNumber(optionsBuilder.build())
+                    .setCallbacks(callbacks)
+                    .build()// OnVerificationStateChangedCallbacks
+                PhoneAuthProvider.verifyPhoneNumber(optionsBuilder);
             }
             // [END resend_verification]
 
