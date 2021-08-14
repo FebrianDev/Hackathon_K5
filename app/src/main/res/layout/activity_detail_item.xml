@@ -21,14 +21,16 @@
         android:layout_marginTop="24dp"
         android:src="@drawable/ic_baseline_arrow_back_ios_new_24"/>
 
-    <ImageView
+    <com.denzcoskun.imageslider.ImageSlider
         android:id="@+id/img"
+        app:iss_auto_cycle="true"
         android:layout_width="match_parent"
         android:layout_height="320dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
     <LinearLayout
+
         app:layout_constraintTop_toBottomOf="@+id/img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +63,8 @@
 Mohon maaf mengganggu waktunya.
 Saya Briliando Elmansyah dari LMB. Mengingatkan kembali untuk acara Pengumuman Lomba PENS COMPETITION 2021. Untuk itu kami mengundang seluruh peserta dari cabang lomba"
             android:textColor="@color/black"/>
-    </LinearLayout>
+    </LinearLayout
+        >
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -153,10 +153,11 @@ class RegisterActivity : AppCompatActivity() {
             // [START resend_verification]
             private fun resendVerificationCode(
                 phoneNumber: String,
-                token: PhoneAuthProvider.ForceResendingToken?
+                token: PhoneAuthProvider.ForceResendingToken
             ) {
                 val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
-                    .setPhoneNumber(phoneNumber)       // Phone number to verify
+                    .setPhoneNumber(phoneNumber)
+                    .setForceResendingToken(token)// Phone number to verify
                     .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                     .setActivity(this)                 // Activity (for callback binding)
                     .setCallbacks(callbacks)
