@@ -61,6 +61,7 @@ class Login2Activity : AppCompatActivity() {
                                 val intent = Intent(applicationContext, HomePedagangActivity::class.java)
                                 intent.putExtra(KEY_NAME, name)
                                 startActivity(intent)
+                                finish()
                             }else{
                                 binding.btnMasuk.isEnabled = true
                                 binding.btnMasuk.text = "Masuk"

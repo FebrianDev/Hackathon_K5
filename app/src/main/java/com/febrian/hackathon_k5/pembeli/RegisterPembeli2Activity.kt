@@ -98,6 +98,7 @@ class RegisterPembeli2Activity : AppCompatActivity() {
                                         val intent =  Intent(applicationContext, HomePembeliActivity::class.java)
                                         intent.putExtra(KEY_NAME, name)
                                         startActivity(intent)
+                                        finish()
                                     }
 
                                 override fun onCancelled(error: DatabaseError) {
@@ -137,7 +138,7 @@ class RegisterPembeli2Activity : AppCompatActivity() {
                                 val intent =  Intent(applicationContext, HomePembeliActivity::class.java)
                                 intent.putExtra(KEY_NAME, name)
                                 startActivity(intent)
-
+                                finish()
                             }
                         }
 

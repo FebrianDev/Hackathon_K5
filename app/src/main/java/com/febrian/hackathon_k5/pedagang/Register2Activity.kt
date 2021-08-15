@@ -96,6 +96,7 @@ class Register2Activity : AppCompatActivity() {
                                         startActivity(
                                             intent
                                         )
+                                        finish()
                                     }
 
                                 override fun onCancelled(error: DatabaseError) {
@@ -139,6 +140,7 @@ class Register2Activity : AppCompatActivity() {
                                 startActivity(
                                     intent
                                 )
+                                finish()
                             }
                         }
 

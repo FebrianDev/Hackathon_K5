@@ -30,7 +30,8 @@ class EditProfilPedagangFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return FragmentEditProfilPedagangBinding.inflate(layoutInflater, container, false).root
+        binding = FragmentEditProfilPedagangBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
