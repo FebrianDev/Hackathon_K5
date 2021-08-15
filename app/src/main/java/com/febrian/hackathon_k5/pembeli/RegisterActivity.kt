@@ -54,33 +54,31 @@ class RegisterActivity : AppCompatActivity() {
                     val password: String = binding.passwordPass.text.toString().trim(){it <= ' '}
 
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(
-                            { task ->
-                                if(task.isSuccessful){
-                                    val firebaseUser: FirebaseUser = task.result!!.user!!
-                                    Toast.makeText(
-                                        this@RegisterActivity,
-                                        "Anda berhasil terdaftar.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val firebaseUser: FirebaseUser = task.result!!.user!!
+                                Toast.makeText(
+                                    this@RegisterActivity,
+                                    "Anda berhasil terdaftar.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
-                                    val intent =
-                                        Intent(this@RegisterActivity, LoginActivity::class.java)
-                                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    intent.putExtra("user_id", firebaseUser.uid)
-                                    intent.putExtra("email_id", email)
-                                    startActivity(intent)
-                                    finish()
-                                }
-                                else {
-                                    Toast.makeText(
-                                        this@RegisterActivity,
-                                        task.exception!!.message.toString(),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
+                                val intent =
+                                    Intent(this@RegisterActivity, LoginActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                intent.putExtra("user_id", firebaseUser.uid)
+                                intent.putExtra("email_id", email)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(
+                                    this@RegisterActivity,
+                                    task.exception!!.message.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-                        )
+                        }
                 }
             }
         }

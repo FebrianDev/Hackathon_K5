@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.febrian.hackathon_k5.R
 import com.febrian.hackathon_k5.databinding.ItemHomeBinding
+import com.febrian.hackathon_k5.pembeli.LoginPembeli2Activity.Companion.KEY_NAME
 
 class AdapterHome(private val list : ArrayList<Model>) : RecyclerView.Adapter<AdapterHome.ViewHolder>() {
 
@@ -15,10 +16,11 @@ class AdapterHome(private val list : ArrayList<Model>) : RecyclerView.Adapter<Ad
             with(binding){
                 binding.namaDagangan.text = m.namaDagangan.toString()
                 binding.namaPedagang.text = m.namaPedagang.toString()
-                Glide.with(itemView).load(R.drawable.exercise).into(binding.img)
+                Glide.with(itemView).load(m.img0.toString()).centerCrop().fitCenter().into(binding.img)
 
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailItemActivity::class.java)
+                    intent.putExtra(DetailItemActivity.KEY_DETAIL, m.username)
                     itemView.context.startActivity(intent)
                 }
             }

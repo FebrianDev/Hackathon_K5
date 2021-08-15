@@ -4,12 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="8dp"
     android:elevation="8dp"
-    app:cardElevation="8dp"
     android:layout_margin="8dp"
+    app:cardElevation="8dp"
     android:layout_height="wrap_content">
     
     <LinearLayout
-        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -26,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:paddingHorizontal="16dp"
             android:text="Pak Joni"
             android:textStyle="bold"
             android:textColor="@color/black"/>
@@ -33,7 +33,9 @@
             android:id="@+id/nama_dagangan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
             android:textSize="14sp"
+            android:paddingBottom="8dp"
             android:text="Nasi Goreng"
             android:textColor="@color/black"/>
     </LinearLayout>

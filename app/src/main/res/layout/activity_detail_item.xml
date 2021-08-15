@@ -28,7 +28,8 @@
         android:layout_height="320dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingClass" />
     <LinearLayout
 
         app:layout_constraintTop_toBottomOf="@+id/img"
@@ -41,27 +42,28 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/dagangan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
-            android:text="Pak Joni"
+            android:text=""
             android:textStyle="bold"
             android:textColor="@color/black"/>
         <TextView
+            android:id="@+id/pemilik"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:layout_marginTop="8dp"
-            android:text="Nasi Goreng"
+            android:text=""
             android:textColor="@color/black"/>
         <TextView
+            android:id="@+id/deskripsi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:layout_marginTop="8dp"
-            android:text="[18:54, 8/10/2021] +62 813-8815-6287: Selamat sore Mas/Mbak semuanya.
-Mohon maaf mengganggu waktunya.
-Saya Briliando Elmansyah dari LMB. Mengingatkan kembali untuk acara Pengumuman Lomba PENS COMPETITION 2021. Untuk itu kami mengundang seluruh peserta dari cabang lomba"
+            android:text=""
             android:textColor="@color/black"/>
     </LinearLayout
         >
