@@ -4,11 +4,21 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Hackathon_K5">
+        <activity
+            android:name=".pedagang.HomePedagangActivity"
+            android:exported="true" />
+        <activity
+            android:name=".pembeli.EditProfilPembeliActivity"
+            android:exported="true" />
+        <activity
+            android:name=".pembeli.HomePembeliActivity"
+            android:exported="true" />
         <activity
             android:name=".pembeli.RegisterPembeli2Activity"
             android:exported="true" />
@@ -24,7 +34,6 @@
         <activity
             android:name=".pedagang.AddDagangan"
             android:exported="true" />
-
         <activity
             android:name=".pembeli.RegisterActivity"
             android:exported="true" />
@@ -42,21 +51,15 @@
             android:exported="true" />
         <activity
             android:name=".pedagang.RegisterActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".pembeli.HomeActivity"
             android:exported="true"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.Hackathon_K5.NoActionBar" >
-
-        </activity>
-
-        <activity android:name=".PedagangAtauPembeli"
-            android:exported="true">
-
-        </activity>
+            android:theme="@style/Theme.Hackathon_K5.NoActionBar" />
+        <activity
+            android:name=".PedagangAtauPembeli"
+            android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,10 +68,10 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

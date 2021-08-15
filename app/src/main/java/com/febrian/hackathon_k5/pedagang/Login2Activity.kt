@@ -58,7 +58,7 @@ class Login2Activity : AppCompatActivity() {
                                     apply()
                                 }
 
-                                val intent = Intent(applicationContext, HomeActivity::class.java)
+                                val intent = Intent(applicationContext, HomePedagangActivity::class.java)
                                 intent.putExtra(KEY_NAME, name)
                                 startActivity(intent)
                             }else{

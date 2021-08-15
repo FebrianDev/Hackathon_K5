@@ -9,31 +9,27 @@ import android.webkit.MimeTypeMap
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.febrian.hackathon_k5.MainActivity
-import com.febrian.hackathon_k5.databinding.ActivityRegisterPembeli2Binding
-import com.febrian.hackathon_k5.pedagang.Login2Activity
+import com.febrian.hackathon_k5.databinding.ActivityEditProfilPembeliBinding
 import com.febrian.hackathon_k5.pedagang.Register2Activity
+import com.febrian.hackathon_k5.pembeli.LoginPembeli2Activity.Companion.KEY_NAME
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 
-class RegisterPembeli2Activity : AppCompatActivity() {
+class EditProfilPembeliActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityRegisterPembeli2Binding
-
+    private lateinit var binding : ActivityEditProfilPembeliBinding
     private lateinit var database: DatabaseReference
-    private lateinit var storage: StorageReference
-    private var uri: Uri? = null
-
-    companion object {
-        const val PICK_IMAGE_REQUEST = 1
-        const val KEY_NAME = "KEY_NAME2"
-    }
 
     private lateinit var sharedPreferences : SharedPreferences
 
+    private var uri: Uri? = null
+
+    val PICK_IMAGE_REQUEST = 1000
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterPembeli2Binding.inflate(layoutInflater)
+        binding = ActivityEditProfilPembeliBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         sharedPreferences = getSharedPreferences(MainActivity.KEYLOGIN, MODE_PRIVATE)
@@ -42,17 +38,35 @@ class RegisterPembeli2Activity : AppCompatActivity() {
             findImage()
         }
 
-        binding.login.setOnClickListener {
-            val intent = Intent(applicationContext, Login2Activity::class.java)
-            startActivity(intent)
+        binding.back.setOnClickListener {
+            finish()
         }
 
-        binding.btnDaftar.setOnClickListener {
+        val name = sharedPreferences.getString(KEY_NAME, "")
+        database =  FirebaseDatabase.getInstance().reference.child("UsersPembeli").child(name.toString())
+
+        database.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                binding.nama.setText(snapshot.child("username").value.toString())
+                binding.password.setText(snapshot.child("password").value.toString())
+
+                if(snapshot.child("url_image").value != null)
+                    Glide.with(applicationContext).load(snapshot.child("url_image").value.toString()).into(binding.ivPhoto)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(applicationContext, error.message, Toast.LENGTH_LONG).show()
+            }
+
+        })
+
+        binding.btnEdit.setOnClickListener {
+
             val name = binding.nama.text.toString()
             val pwd = binding.password.text.toString()
 
-            database = FirebaseDatabase.getInstance().reference.child("UsersPembeli").child(name)
-            storage = FirebaseStorage.getInstance().reference.child("ImageUsers")
+            val databaseEdit = FirebaseDatabase.getInstance().reference.child("UsersPembeli").child(name)
+            val storage = FirebaseStorage.getInstance().reference.child("ImageUsers")
             val newImage = arrayOfNulls<String>(1)
 
             if (name.isEmpty()) {
@@ -62,8 +76,8 @@ class RegisterPembeli2Activity : AppCompatActivity() {
             } else if (pwd.length < 6) {
                 binding.password.error = "Password Harus Minimal 6"
             } else {
-                binding.btnDaftar.isEnabled = false
-                binding.btnDaftar.text = "Loading...."
+                binding.btnEdit.isEnabled = false
+                binding.btnEdit.text = "Loading...."
                 if (uri != null) {
                     val storageReference =
                         storage.child(
@@ -75,34 +89,23 @@ class RegisterPembeli2Activity : AppCompatActivity() {
 
                             database.addValueEventListener(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) =
-                                    if (snapshot.exists()) {
+                                    if (snapshot.child("username").value.toString() == name) {
                                         binding.nama.error = "Username Sudah Ada!"
-                                        binding.btnDaftar.isEnabled = true
-                                        binding.btnDaftar.text = "Daftar"
+                                        binding.btnEdit.isEnabled = true
+                                        binding.btnEdit.text = "Daftar"
                                     } else {
                                         snapshot.ref.child("username").setValue(name)
                                         snapshot.ref.child("password").setValue(pwd)
                                         snapshot.ref.child("url_image").setValue(newImage[0])
-                                        binding.btnDaftar.isEnabled = true
-                                        binding.btnDaftar.text = "Daftar"
+                                        binding.btnEdit.isEnabled = true
+                                        binding.btnEdit.text = "Daftar"
 
-                                        sharedPreferences.edit().apply {
-                                            putString(
-                                                MainActivity.KEYLOGIN,
-                                                MainActivity.keylogin_pembeli
-                                            )
-                                            putString(LoginPembeli2Activity.KEY_NAME, name)
-                                            apply()
-                                        }
-
-                                        val intent =  Intent(applicationContext, HomePembeliActivity::class.java)
-                                        intent.putExtra(KEY_NAME, name)
-                                        startActivity(intent)
+                                        finish()
                                     }
 
                                 override fun onCancelled(error: DatabaseError) {
-                                    binding.btnDaftar.isEnabled = true
-                                    binding.btnDaftar.text = "Daftar"
+                                    binding.btnEdit.isEnabled = true
+                                    binding.btnEdit.text = "Daftar"
                                     Toast.makeText(
                                         applicationContext,
                                         error.message.toString(),
@@ -115,35 +118,27 @@ class RegisterPembeli2Activity : AppCompatActivity() {
                     }
                 }
                 else{
-                    database.addListenerForSingleValueEvent(object : ValueEventListener {
+                    database.addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             if (snapshot.exists()) {
                                 binding.nama.error = "Username Sudah Ada!"
-                                binding.btnDaftar.isEnabled = true
-                                binding.btnDaftar.text = "Daftar"
+                                binding.btnEdit.isEnabled = true
+                                binding.btnEdit.text = "Edit"
                             } else {
                                 snapshot.ref.child("username").setValue(name)
                                 snapshot.ref.child("password").setValue(pwd)
-                             //   snapshot.getRef().child("url_image").setValue("gs://hackathon-k5.appspot.com/icon_nopic.PNG")
-                                binding.btnDaftar.isEnabled = true
-                                binding.btnDaftar.text = "Daftar"
+                                //   snapshot.getRef().child("url_image").setValue("gs://hackathon-k5.appspot.com/icon_nopic.PNG")
+                                binding.btnEdit.isEnabled = true
+                                binding.btnEdit.text = "Edit"
 
-                                sharedPreferences.edit().apply {
-                                    putString(MainActivity.KEYLOGIN, MainActivity.keylogin_pembeli)
-                                    putString(LoginPembeli2Activity.KEY_NAME, name)
-                                    apply()
-                                }
-
-                                val intent =  Intent(applicationContext, HomePembeliActivity::class.java)
-                                intent.putExtra(KEY_NAME, name)
-                                startActivity(intent)
+                                finish()
 
                             }
                         }
 
                         override fun onCancelled(error: DatabaseError) {
-                            binding.btnDaftar.isEnabled = true
-                            binding.btnDaftar.text = "Daftar"
+                            binding.btnEdit.isEnabled = true
+                            binding.btnEdit.text = "Edit"
                             Toast.makeText(
                                 applicationContext,
                                 error.message.toString(),

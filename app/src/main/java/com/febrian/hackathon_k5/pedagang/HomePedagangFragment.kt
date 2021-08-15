@@ -3,21 +3,24 @@ package com.febrian.hackathon_k5.pedagang
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color.green
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.febrian.hackathon_k5.MainActivity.Companion.KEYLOGIN
-import com.febrian.hackathon_k5.databinding.ActivityHomePedagangBinding
+import com.febrian.hackathon_k5.MainActivity
+import com.febrian.hackathon_k5.R
+import com.febrian.hackathon_k5.databinding.FragmentHomePedagangBinding
 import com.google.firebase.database.*
 
-class HomeActivity : AppCompatActivity() {
+class HomePedagangFragment : Fragment() {
 
-    private lateinit var binding : ActivityHomePedagangBinding
+    private lateinit var binding : FragmentHomePedagangBinding
+
     private lateinit var database: DatabaseReference
 
     companion object{
@@ -25,24 +28,32 @@ class HomeActivity : AppCompatActivity() {
     }
     private lateinit var sharedPreferences : SharedPreferences
 
-    @SuppressLint("ResourceAsColor")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityHomePedagangBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        return FragmentHomePedagangBinding.inflate(layoutInflater, container, false).root
+    }
 
-        sharedPreferences = getSharedPreferences(KEYLOGIN, MODE_PRIVATE)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val name = sharedPreferences.getString(KEY_NAME, "")
+        sharedPreferences = activity?.getSharedPreferences(
+            MainActivity.KEYLOGIN,
+            AppCompatActivity.MODE_PRIVATE
+        )!!
+
+        val name = sharedPreferences.getString(HomeActivity.KEY_NAME, "")
         binding.btnTambah.setOnClickListener {
-            val intent = Intent(applicationContext, AddDagangan::class.java)
-            intent.putExtra(KEY_NAME, name)
+            val intent = Intent(view.context, AddDagangan::class.java)
+            intent.putExtra(HomeActivity.KEY_NAME, name)
             startActivity(intent)
         }
 
         var active  = false
         database = FirebaseDatabase.getInstance().getReference("UsersPedagang").child(name.toString())
-        database.addValueEventListener(object : ValueEventListener{
+        database.addValueEventListener(object : ValueEventListener {
             @SuppressLint("SetTextI18n", "ResourceAsColor")
             override fun onDataChange(snapshot: DataSnapshot) {
                 binding.loading.visibility = View.GONE
@@ -56,7 +67,7 @@ class HomeActivity : AppCompatActivity() {
                     binding.deskripsi.setText(snapshot.child("deskripsi").value.toString())
 
                 if(snapshot.child("url_image").value != null)
-                    Glide.with(applicationContext).load(snapshot.child("url_image").value.toString()).into(binding.imgUser)
+                    Glide.with(view.context).load(snapshot.child("url_image").value.toString()).into(binding.imgUser)
 
                 val list = ArrayList<String>()
                 for(i in 0 until 3){
@@ -68,7 +79,7 @@ class HomeActivity : AppCompatActivity() {
                 if(list.size != 0){
                     binding.linearLayout2.visibility = View.GONE
                     binding.rv.visibility = View.VISIBLE
-                    binding.rv.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL,
+                    binding.rv.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL,
                         false)
                     binding.rv.adapter = AdapterHomeString(list)
                 }else{
@@ -78,10 +89,10 @@ class HomeActivity : AppCompatActivity() {
 
                 active = snapshot.child("active").value as Boolean
             }
-//
+            //
             override fun onCancelled(error: DatabaseError) {
-    binding.loading.visibility = View.GONE
-                Toast.makeText(applicationContext, error.message.toString(), Toast.LENGTH_LONG).show()
+                binding.loading.visibility = View.GONE
+                Toast.makeText(view.context, error.message.toString(), Toast.LENGTH_LONG).show()
             }
 
         })
@@ -95,13 +106,13 @@ class HomeActivity : AppCompatActivity() {
             }
 
             val databaseUpdate = FirebaseDatabase.getInstance().getReference("UsersPedagang").child(name.toString())
-            databaseUpdate.addValueEventListener(object : ValueEventListener{
+            databaseUpdate.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.ref.child("active").setValue(active)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(applicationContext, error.message.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(view.context, error.message.toString(), Toast.LENGTH_LONG).show()
                 }
 
             })

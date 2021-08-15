@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.febrian.hackathon_k5.pedagang.HomePedagangActivity
 import com.febrian.hackathon_k5.pembeli.HomeActivity
+import com.febrian.hackathon_k5.pembeli.HomePembeliActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,11 +29,11 @@ class MainActivity : AppCompatActivity() {
             delay(800)
 
             if(value == keylogin_pedagang) {
-                val intent = Intent(applicationContext, com.febrian.hackathon_k5.pedagang.HomeActivity::class.java)
+                val intent = Intent(applicationContext, HomePedagangActivity::class.java)
                 startActivity(intent)
                 finish()
             }else if(value == keylogin_pembeli){
-                val intent = Intent(applicationContext, HomeActivity::class.java)
+                val intent = Intent(applicationContext, HomePembeliActivity::class.java)
                 startActivity(intent)
                 finish()
             }else{

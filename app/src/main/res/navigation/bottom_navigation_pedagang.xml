@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_navigation_pedagang"
+    app:startDestination="@id/homePedagangFragment">
+
+    <fragment
+        android:id="@+id/homePedagangFragment"
+        android:name="com.febrian.hackathon_k5.pedagang.HomePedagangFragment"
+        android:label="fragment_home_pedagang"
+        tools:layout="@layout/fragment_home_pedagang" />
+    <fragment
+        android:id="@+id/editProfilPedagangFragment2"
+        android:name="com.febrian.hackathon_k5.pedagang.EditProfilPedagangFragment"
+        android:label="fragment_edit_profil_pedagang"
+        tools:layout="@layout/fragment_edit_profil_pedagang" />
+</navigation>

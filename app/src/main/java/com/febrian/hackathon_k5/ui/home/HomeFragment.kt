@@ -13,6 +13,7 @@ import android.widget.GridLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -29,13 +30,12 @@ import com.google.firebase.database.*
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private lateinit var binding: FragmentHomeBinding
     private lateinit var database: DatabaseReference
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
-    private lateinit var sharedPreferences : SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,13 +43,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return _binding!!.root
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.loading.visibility = View.VISIBLE
 
         sharedPreferences = view.context.getSharedPreferences(
             MainActivity.KEYLOGIN,
@@ -60,31 +60,24 @@ class HomeFragment : Fragment() {
             Html.fromHtml("<font color = #067451>" + "Cari Disini" + "</font>")
 
         val name = sharedPreferences.getString(KEY_NAME, "")
-        val list = ArrayList<Model>()
-        database = FirebaseDatabase.getInstance().getReference("UsersPedagang")
-        database.addListenerForSingleValueEvent(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
+        submit("")
 
-                for (dataSnapshot in snapshot.children) {
-                    val d: Model = dataSnapshot.getValue(Model::class.java)!!
-                    list.add(d)
-                }
-
-
-                binding.rv.layoutManager = GridLayoutManager(view.context, 2)
-                binding.rv.setHasFixedSize(true)
-                binding.rv.adapter = AdapterHome(list)
-
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                submit(query.toString())
+                return true
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(view.context, error.message, Toast.LENGTH_LONG).show()
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
             }
 
         })
 
-        val databasePembeli = FirebaseDatabase.getInstance().getReference("UsersPembeli").child(name.toString())
-        databasePembeli.addListenerForSingleValueEvent(object : ValueEventListener{
+
+        val databasePembeli =
+            FirebaseDatabase.getInstance().getReference("UsersPembeli").child(name.toString())
+        databasePembeli.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 binding.name.setText(snapshot.child("username").value.toString())
             }
@@ -96,12 +89,41 @@ class HomeFragment : Fragment() {
         })
     }
 
-    var i = 0
+    private fun submit(s: String) {
+        binding.loading.visibility = View.VISIBLE
+
+        val list = ArrayList<Model>()
+        database = FirebaseDatabase.getInstance().getReference("UsersPedagang")
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                binding.loading.visibility = View.GONE
+                for (dataSnapshot in snapshot.children) {
+                    val d: Model = dataSnapshot.getValue(Model::class.java)!!
+                    if (d.active as Boolean)
+                        list.add(d)
+                }
+
+                if (s == "" || s.isEmpty()) {
+                    binding.rv.layoutManager = GridLayoutManager(view!!.context, 2)
+                    binding.rv.setHasFixedSize(true)
+                    binding.rv.adapter = AdapterHome(list)
+                } else {
+                    binding.rv.layoutManager = GridLayoutManager(view!!.context, 2)
+                    binding.rv.setHasFixedSize(true)
+                    binding.rv.adapter = AdapterHome(list)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                binding.loading.visibility = View.GONE
+                Toast.makeText(view!!.context, error.message, Toast.LENGTH_LONG).show()
+            }
+
+        })
+    }
 
     private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            i++
-            Log.d("Inc", i.toString())
 
         }
     }
@@ -117,8 +139,4 @@ class HomeFragment : Fragment() {
         view?.context?.unregisterReceiver(broadcastReceiver)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

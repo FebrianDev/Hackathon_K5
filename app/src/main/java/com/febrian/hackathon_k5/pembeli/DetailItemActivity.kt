@@ -1,6 +1,7 @@
 package com.febrian.hackathon_k5.pembeli
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -9,6 +10,8 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.febrian.hackathon_k5.databinding.ActivityDetailItemBinding
 import com.febrian.hackathon_k5.pembeli.LoginPembeli2Activity.Companion.KEY_NAME
 import com.google.firebase.database.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DetailItemActivity : AppCompatActivity() {
 
@@ -44,6 +47,19 @@ companion object{
                 binding.dagangan.text = snapshot.child("dagangan").value.toString()
                 binding.pemilik.text = snapshot.child("nama_pemilik").value.toString()
                 binding.deskripsi.text = snapshot.child("deskripsi").value.toString()
+
+                binding.openWa.setOnClickListener {
+                    val url = "https://api.whatsapp.com/send?phone=+62"+snapshot.child("wa").value.toString()
+                    val i =  Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(url)
+                    startActivity(i)
+                }
+
+                binding.openMaps.setOnClickListener {
+                    val uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=loc:%f,%f", 28.43242324,77.8977673);
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    startActivity(intent)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {

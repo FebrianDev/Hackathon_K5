@@ -81,6 +81,7 @@ class Register2Activity : AppCompatActivity() {
                                         snapshot.ref.child("username").setValue(name)
                                         snapshot.ref.child("password").setValue(pwd)
                                         snapshot.ref.child("url_image").setValue(newImage[0])
+                                        snapshot.ref.child("active").setValue(false)
                                         binding.btnDaftar.isEnabled = true
                                         binding.btnDaftar.text = "Daftar"
 
@@ -90,7 +91,7 @@ class Register2Activity : AppCompatActivity() {
                                             apply()
                                         }
                                         val intent =
-                                            Intent(applicationContext, HomeActivity::class.java)
+                                            Intent(applicationContext, HomePedagangActivity::class.java)
                                         intent.putExtra(HomeActivity.KEY_NAME, name)
                                         startActivity(
                                             intent
@@ -120,8 +121,9 @@ class Register2Activity : AppCompatActivity() {
                             } else {
                                 snapshot.ref.child("username").setValue(name)
                                 snapshot.ref.child("password").setValue(pwd)
-                                snapshot.getRef().child("url_image")
-                                    .setValue("gs://hackathon-k5.appspot.com/icon_nopic.PNG")
+                                snapshot.ref.child("active").setValue(false)
+                            //    snapshot.getRef().child("url_image")
+                             //       .setValue("gs://hackathon-k5.appspot.com/icon_nopic.PNG")
                                 binding.btnDaftar.isEnabled = true
                                 binding.btnDaftar.text = "Daftar"
 
@@ -132,7 +134,7 @@ class Register2Activity : AppCompatActivity() {
                                 }
 
                                 val intent =
-                                    Intent(applicationContext, HomeActivity::class.java)
+                                    Intent(applicationContext, HomePedagangActivity::class.java)
                                 intent.putExtra(HomeActivity.KEY_NAME, name)
                                 startActivity(
                                     intent
