@@ -55,8 +55,10 @@ companion object{
                     startActivity(i)
                 }
 
+                val lat = snapshot.child("lat").value
+                val long = snapshot.child("long").value
                 binding.openMaps.setOnClickListener {
-                    val uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=loc:%f,%f", 28.43242324,77.8977673);
+                    val uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?q=loc:%f,%f", lat,long)
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                     startActivity(intent)
                 }
@@ -68,6 +70,10 @@ companion object{
 
         })
 
+
+        binding.back.setOnClickListener {
+            finish()
+        }
     }
 
 }

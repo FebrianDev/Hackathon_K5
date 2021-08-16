@@ -126,8 +126,6 @@ class AddDagangan : AppCompatActivity() {
         }
 
         binding.btnBack.setOnClickListener {
-            val intent = Intent(applicationContext, HomeActivity::class.java)
-            startActivity(intent)
             finish()
         }
     }
