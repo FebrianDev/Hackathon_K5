@@ -16,11 +16,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:isScrollContainer="false"
         app:navGraph="@navigation/bottom_navigation_pembeli" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
+        android:isScrollContainer="false"
         style="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface"
         app:itemIconTint="@color/selected_bottom_navigation"
         app:itemTextColor="@color/selected_bottom_navigation"

@@ -18,6 +18,8 @@
             android:exported="true" />
         <activity
             android:name=".pembeli.HomePembeliActivity"
+
+            android:windowSoftInputMode="adjustPan"
             android:exported="true" />
         <activity
             android:name=".pembeli.RegisterPembeli2Activity"
