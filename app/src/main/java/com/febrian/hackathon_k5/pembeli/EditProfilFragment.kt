@@ -23,11 +23,9 @@ import com.google.firebase.storage.StorageReference
 
 class EditProfilFragment : Fragment() {
 
-    private lateinit var binding : FragmentEditProfilBinding
-    private lateinit var storage: StorageReference
+    private lateinit var binding: FragmentEditProfilBinding
 
     private lateinit var database: DatabaseReference
-    private var uri: Uri? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,7 +35,7 @@ class EditProfilFragment : Fragment() {
         return binding.root
     }
 
-    private lateinit var sharedPreferences : SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,11 +56,8 @@ class EditProfilFragment : Fragment() {
 
         val name = sharedPreferences.getString(LoginPembeli2Activity.KEY_NAME, "")
 
-        binding.btnEdit.setOnClickListener {
-
-        }
-
-        database =  FirebaseDatabase.getInstance().reference.child("UsersPembeli").child(name.toString())
+        database =
+            FirebaseDatabase.getInstance().reference.child("UsersPembeli").child(name.toString())
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -71,8 +66,9 @@ class EditProfilFragment : Fragment() {
                 binding.nama.setText(snapshot.child("username").value.toString())
                 binding.password.setText(snapshot.child("password").value.toString())
 
-                if(snapshot.child("url_image").value != null)
-                    Glide.with(view.context).load(snapshot.child("url_image").value.toString()).into(binding.ivPhoto)
+                if (snapshot.child("url_image").value != null)
+                    Glide.with(view.context).load(snapshot.child("url_image").value.toString())
+                        .into(binding.ivPhoto)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -81,39 +77,5 @@ class EditProfilFragment : Fragment() {
 
         })
 
-        binding.addPhoto.setOnClickListener {
-            findImage()
-        }
-
-        binding.btnEdit.setOnClickListener {
-            if (uri != null) {
-                database = FirebaseDatabase.getInstance().reference.child("UsersPembeli")
-                    .child(name.toString())
-                storage = FirebaseStorage.getInstance().reference.child("ImageUsers")
-                val newImage = arrayOfNulls<String>(1)
-            }
-        }
     }
-
-
-    private fun getFileExtension(uri: Uri?): String? {
-        val contentResolver = view?.context?.contentResolver
-        val mimeTypeMap = MimeTypeMap.getSingleton()
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver?.getType(uri!!))
-    }
-
-    private fun findImage() {
-        val img = Intent()
-        img.type = "image/*"
-        img.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(img, Register2Activity.PICK_IMAGE_REQUEST)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Register2Activity.PICK_IMAGE_REQUEST && resultCode == AppCompatActivity.RESULT_OK && data != null && data.data != null) {
-            uri = data.data!!
-            Glide.with(view?.context!!).load(uri).centerCrop().fitCenter().into(binding.ivPhoto)
-        }
-   }
 }

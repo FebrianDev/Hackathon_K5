@@ -21,9 +21,9 @@ import com.google.firebase.database.*
 class EditProfilPedagangFragment : Fragment() {
 
 
-    private lateinit var binding : FragmentEditProfilPedagangBinding
+    private lateinit var binding: FragmentEditProfilPedagangBinding
     private lateinit var database: DatabaseReference
-    private lateinit var sharedPreferences : SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,11 +53,8 @@ class EditProfilPedagangFragment : Fragment() {
 
         val name = sharedPreferences.getString(KEY_NAME, "")
 
-        binding.btnEdit.setOnClickListener {
-
-        }
-
-        database =  FirebaseDatabase.getInstance().reference.child("UsersPedagang").child(name.toString())
+        database =
+            FirebaseDatabase.getInstance().reference.child("UsersPedagang").child(name.toString())
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -66,8 +63,9 @@ class EditProfilPedagangFragment : Fragment() {
                 binding.nama.setText(snapshot.child("username").value.toString())
                 binding.password.setText(snapshot.child("password").value.toString())
 
-                if(snapshot.child("url_image").value != null)
-                    Glide.with(view.context).load(snapshot.child("url_image").value.toString()).into(binding.ivPhoto)
+                if (snapshot.child("url_image").value != null)
+                    Glide.with(view.context).load(snapshot.child("url_image").value.toString())
+                        .into(binding.ivPhoto)
             }
 
             override fun onCancelled(error: DatabaseError) {
