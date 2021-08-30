@@ -1,31 +1,20 @@
-package com.febrian.hackathon_k5.ui.home
+package com.febrian.hackathon_k5.pembeli
 
 import android.content.*
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.febrian.hackathon_k5.MainActivity
-import com.febrian.hackathon_k5.R
 import com.febrian.hackathon_k5.databinding.FragmentHomeBinding
-import com.febrian.hackathon_k5.pedagang.HomeActivity
-import com.febrian.hackathon_k5.pembeli.AdapterHome
-import com.febrian.hackathon_k5.pembeli.LoginPembeli2Activity
 import com.febrian.hackathon_k5.pembeli.LoginPembeli2Activity.Companion.KEY_NAME
-import com.febrian.hackathon_k5.pembeli.Model
 import com.google.firebase.database.*
 
 class HomeFragment : Fragment() {
@@ -69,7 +58,8 @@ class HomeFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+                submit(newText.toString())
+                return true
             }
 
         })
@@ -108,9 +98,17 @@ class HomeFragment : Fragment() {
                     binding.rv.setHasFixedSize(true)
                     binding.rv.adapter = AdapterHome(list)
                 } else {
-                    binding.rv.layoutManager = GridLayoutManager(view!!.context, 2)
-                    binding.rv.setHasFixedSize(true)
-                    binding.rv.adapter = AdapterHome(list)
+                    val l = ArrayList<Model>()
+
+                    for (i in 0..list.size-1) {
+                        if(list[i].namaDagangan == s){
+                            l.add(list[i])
+                        }
+                    }
+                        binding.rv.layoutManager = GridLayoutManager(view!!.context, 2)
+                        binding.rv.setHasFixedSize(true)
+                        binding.rv.adapter = AdapterHome(l)
+
                 }
             }
 

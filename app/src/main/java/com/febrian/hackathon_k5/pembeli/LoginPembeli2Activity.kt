@@ -83,5 +83,7 @@ class LoginPembeli2Activity : AppCompatActivity() {
                 })
             }
         }
+
+        binding.back.setOnClickListener { finish() }
     }
 }

@@ -9,7 +9,7 @@ import com.febrian.hackathon_k5.MainActivity
 import com.febrian.hackathon_k5.R
 import com.febrian.hackathon_k5.databinding.ActivityLogin2Binding
 import com.febrian.hackathon_k5.databinding.ActivityRegister2Binding
-import com.febrian.hackathon_k5.pedagang.HomeActivity.Companion.KEY_NAME
+import com.febrian.hackathon_k5.pedagang.HomePedagangFragment.Companion.KEY_NAME
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import com.google.firebase.storage.StorageReference
@@ -83,5 +83,7 @@ class Login2Activity : AppCompatActivity() {
                 })
             }
         }
+
+        binding.back.setOnClickListener { finish() }
     }
 }

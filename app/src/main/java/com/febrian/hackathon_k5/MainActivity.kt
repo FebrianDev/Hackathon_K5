@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.febrian.hackathon_k5.pedagang.HomePedagangActivity
-import com.febrian.hackathon_k5.pembeli.HomeActivity
 import com.febrian.hackathon_k5.pembeli.HomePembeliActivity
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay

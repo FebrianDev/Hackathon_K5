@@ -1,7 +1,9 @@
-package com.febrian.hackathon_k5.pembeli
+package com.febrian.hackathon_k5
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.Menu
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -10,7 +12,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.febrian.hackathon_k5.R
 import com.febrian.hackathon_k5.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -34,8 +35,8 @@ class HomeActivity : AppCompatActivity() {
 //        binding.appBarHome.toolbar.elevation = 0f
 //        supportActionBar?.elevation = 0f
 //        actionBar?.elevation = 0f
-//        binding.appBarHome.toolbar.setLogo(R.drawable.icon_navigate)
-//        setSupportActionBar(binding.appBarHome.toolbar)
+        binding.appBarHome.toolbar.setLogo(R.drawable.icon_navigate)
+        setSupportActionBar(binding.appBarHome.toolbar)
         
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -49,9 +50,8 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_home
             ), drawerLayout
         )
-     //  setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

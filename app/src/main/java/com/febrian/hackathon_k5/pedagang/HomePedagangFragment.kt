@@ -68,16 +68,15 @@ class HomePedagangFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         sharedPreferences = activity?.getSharedPreferences(
             MainActivity.KEYLOGIN,
             AppCompatActivity.MODE_PRIVATE
         )!!
 
-        val name = sharedPreferences.getString(HomeActivity.KEY_NAME, "")
+        val name = sharedPreferences.getString(KEY_NAME, "")
         binding.btnTambah.setOnClickListener {
             val intent = Intent(view.context, AddDagangan::class.java)
-            intent.putExtra(HomeActivity.KEY_NAME, name)
+            intent.putExtra(KEY_NAME, name)
             startActivity(intent)
         }
 
@@ -201,11 +200,11 @@ class HomePedagangFragment : Fragment() {
                     database.ref.child("lat").setValue(p0.lastLocation.latitude)
                     database.ref.child("long").setValue(p0.lastLocation.longitude)
 
-                    Toast.makeText(
-                        view?.context,
-                        "Lat ${p0.lastLocation.latitude} Long ${p0.lastLocation.longitude}",
-                        Toast.LENGTH_LONG
-                    ).show()
+//                    Toast.makeText(
+//                        view?.context,
+//                        "Lat ${p0.lastLocation.latitude} Long ${p0.lastLocation.longitude}",
+//                        Toast.LENGTH_LONG
+//                    ).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(view?.context, e.message, Toast.LENGTH_LONG).show()

@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.febrian.hackathon_k5.MainActivity.Companion.KEYLOGIN
 import com.febrian.hackathon_k5.MainActivity.Companion.keylogin_pedagang
 import com.febrian.hackathon_k5.databinding.ActivityRegister2Binding
-import com.febrian.hackathon_k5.pedagang.HomeActivity.Companion.KEY_NAME
+import com.febrian.hackathon_k5.pedagang.HomePedagangFragment.Companion.KEY_NAME
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -92,7 +92,7 @@ class Register2Activity : AppCompatActivity() {
                                         }
                                         val intent =
                                             Intent(applicationContext, HomePedagangActivity::class.java)
-                                        intent.putExtra(HomeActivity.KEY_NAME, name)
+                                        intent.putExtra(KEY_NAME, name)
                                         startActivity(
                                             intent
                                         )
@@ -136,7 +136,7 @@ class Register2Activity : AppCompatActivity() {
 
                                 val intent =
                                     Intent(applicationContext, HomePedagangActivity::class.java)
-                                intent.putExtra(HomeActivity.KEY_NAME, name)
+                                intent.putExtra(KEY_NAME, name)
                                 startActivity(
                                     intent
                                 )
@@ -158,6 +158,8 @@ class Register2Activity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.back.setOnClickListener { finish() }
     }
 
     private fun getFileExtension(uri: Uri?): String? {

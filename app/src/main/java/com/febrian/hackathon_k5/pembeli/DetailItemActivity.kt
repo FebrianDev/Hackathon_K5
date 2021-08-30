@@ -27,11 +27,6 @@ companion object{
 
         val name = intent.getStringExtra(KEY_DETAIL)
 
-        binding.back.setOnClickListener {
-            val intent = Intent(applicationContext, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
         val imageList = ArrayList<SlideModel>()
         database = FirebaseDatabase.getInstance().getReference("UsersPedagang").child(name.toString())
         database.addListenerForSingleValueEvent(object : ValueEventListener{

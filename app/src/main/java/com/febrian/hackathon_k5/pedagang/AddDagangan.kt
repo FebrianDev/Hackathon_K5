@@ -11,7 +11,7 @@ import android.webkit.MimeTypeMap
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.febrian.hackathon_k5.databinding.ActivityAddDaganganBinding
-import com.febrian.hackathon_k5.pedagang.HomeActivity.Companion.KEY_NAME
+import com.febrian.hackathon_k5.pedagang.HomePedagangFragment.Companion.KEY_NAME
 import com.febrian.hackathon_k5.pembeli.Model
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
@@ -57,6 +57,8 @@ class AddDagangan : AppCompatActivity() {
         binding = ActivityAddDaganganBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.loading.visibility = View.VISIBLE
+
         val name = intent.getStringExtra(KEY_NAME)
         database = FirebaseDatabase.getInstance().getReference("UsersPedagang").child(name.toString())
         database.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -90,9 +92,12 @@ class AddDagangan : AppCompatActivity() {
                     binding.linearLayout2.visibility = View.VISIBLE
                     binding.rv.visibility = View.GONE
                 }
+
+                binding.loading.visibility = View.GONE
             }
 
             override fun onCancelled(error: DatabaseError) {
+                binding.loading.visibility = View.GONE
                 Toast.makeText(applicationContext, error.message.toString(), Toast.LENGTH_LONG)
                     .show()
             }
@@ -102,6 +107,7 @@ class AddDagangan : AppCompatActivity() {
         storage = FirebaseStorage.getInstance().getReference("Users").child("ImagePedagang")
 
         binding.simpan.setOnClickListener {
+            binding.loading.visibility = View.VISIBLE
             if (binding.nama.text.toString() == "") {
                 binding.nama.error = "Nama tidak boleh kosong!"
             } else if (binding.dagangan.text.toString() == "") {
@@ -131,13 +137,14 @@ class AddDagangan : AppCompatActivity() {
     }
 
     private fun getData(): Model {
-        val m = Model()
-        m.namaPedagang = binding.nama.text.toString()
-        m.namaDagangan = binding.dagangan.text.toString()
-        m.no = binding.wa.text.toString().toDouble()
-        m.active = false
-        m.description = binding.deskripsi.text.toString()
-        return m
+        val m = Model(
+        namaPedagang = binding.nama.text.toString(),
+        namaDagangan = binding.dagangan.text.toString(),
+        no = binding.wa.text.toString().toDouble(),
+        active = false,
+        description = binding.deskripsi.text.toString()
+        )
+            return m
     }
 
     private fun upload(m: Model) {
@@ -158,21 +165,20 @@ class AddDagangan : AppCompatActivity() {
         }else{
             database.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    binding.loading.visibility = View.GONE
                     snapshot.ref.child("nama_pemilik").setValue(m.namaPedagang)
                     snapshot.ref.child("dagangan").setValue(m.namaDagangan)
                     snapshot.ref.child("deskripsi").setValue(m.description)
                     snapshot.ref.child("wa").setValue(m.no)
-//                    for(i in 0 until listImg.size)
-//                        snapshot.ref.child("img$i").setValue(listImg[i])
 
                     binding.simpan.isEnabled = true
                     binding.simpan.text = "Simpan"
                     ImageList.clear()
-                    val intent = Intent(applicationContext, HomeActivity::class.java)
-                    startActivity(intent)
+                   finish()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    binding.loading.visibility = View.GONE
                     binding.simpan.isEnabled = true
                     binding.simpan.text = "Simpan"
                     Toast.makeText(applicationContext, error.message.toString(), Toast.LENGTH_LONG)
@@ -187,7 +193,7 @@ class AddDagangan : AppCompatActivity() {
         private fun SendLink(url: String, i: Int, m: Model) {
         listImg.add(url)
         if (listImg.size == ImageList.size) {
-            Toast.makeText(applicationContext, "$i ${ImageList.size}", Toast.LENGTH_LONG).show()
+            //Toast.makeText(applicationContext, "$i ${ImageList.size}", Toast.LENGTH_LONG).show()
             database.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.ref.child("nama_pemilik").setValue(m.namaPedagang)
@@ -197,18 +203,17 @@ class AddDagangan : AppCompatActivity() {
                     snapshot.ref.child("wa").setValue(m.no)
                     for(i in 0 until listImg.size)
                         snapshot.ref.child("img$i").setValue(listImg[i])
-//                    snapshot.ref.child("img2").setValue(m.img2)
-//                    snapshot.ref.child("img3").setValue(m.img3)
-//                    snapshot.ref.child("img4").setValue(m.img4)
+
                     binding.simpan.isEnabled = true
                     binding.simpan.text = "Simpan"
                     ImageList.clear()
-                    val intent = Intent(applicationContext, HomeActivity::class.java)
-                    startActivity(intent)
+                    finish()
+                    binding.loading.visibility = View.GONE
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     binding.simpan.isEnabled = true
+                    binding.loading.visibility = View.GONE
                     binding.simpan.text = "Simpan"
                     Toast.makeText(applicationContext, error.message.toString(), Toast.LENGTH_LONG)
                         .show()
@@ -240,10 +245,6 @@ class AddDagangan : AppCompatActivity() {
                             currentImageSelect = currentImageSelect + 1
                         }
                     }
-                    Toast.makeText(applicationContext, ImageList.size.toString(), Toast.LENGTH_LONG)
-                        .show()
-                    Toast.makeText(applicationContext, data.data.toString(), Toast.LENGTH_LONG)
-                        .show()
 
                     binding.rv.visibility = View.VISIBLE
                     binding.linearLayout2.visibility = View.GONE

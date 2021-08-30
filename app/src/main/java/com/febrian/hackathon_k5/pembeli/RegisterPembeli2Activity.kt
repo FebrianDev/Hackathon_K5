@@ -156,6 +156,8 @@ class RegisterPembeli2Activity : AppCompatActivity() {
                 }
             }
         }
+
+        binding.back.setOnClickListener { finish() }
     }
 
     private fun getFileExtension(uri: Uri?): String? {

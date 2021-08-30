@@ -4,11 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="8dp"
     android:elevation="8dp"
-    android:layout_margin="8dp"
     app:cardElevation="8dp"
+    android:layout_margin="8dp"
     android:layout_height="wrap_content">
     
     <LinearLayout
+        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -16,7 +17,6 @@
         
         <ImageView
             android:id="@+id/img"
-            android:src="@drawable/exercise"
             android:layout_width="match_parent"
             android:layout_height="100dp"/>
 
@@ -25,18 +25,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:paddingHorizontal="16dp"
-            android:text="Pak Joni"
+            android:text=""
             android:textStyle="bold"
             android:textColor="@color/black"/>
         <TextView
             android:id="@+id/nama_pedagang"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
             android:textSize="14sp"
-            android:paddingBottom="8dp"
-            android:text="Nasi Goreng"
+            android:text=""
             android:textColor="@color/black"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
